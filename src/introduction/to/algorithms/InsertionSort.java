@@ -1,4 +1,4 @@
-package introduction.to.algorithms.chapter2;
+package introduction.to.algorithms;
 
 // insertion sort 16/12/26
 public class InsertionSort {

@@ -1,49 +1,41 @@
 package test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * use for test
  * @author jiayi
  * 2017年3月2日
  */
 public class Test {
-	public int[] getNext(int[] find) {
-		int length = find.length;
-		int[] next = new int[length];
-		int head = -1, curr = 0;
-		next[0] = -1;
-		while (curr < length -1) {
-			if (head < 0 || find[curr] == find[head]) {
-				head++;
-				curr++;
-				next[curr] = head;
-			} else {
-				head = next[head];
-			}
-		}
-		return next;
+	public List<List<Integer>> subsetsWithDup(int[] nums) {
+	    Arrays.sort(nums);
+	    List<List<Integer>> res = new ArrayList<>();
+	    List<Integer> each = new ArrayList<>();
+	    helper(res, each, 0, nums);
+	    return res;
 	}
-	public int KMP(int[] origin, int[] find) {
-		int originLength = origin.length;
-		int findLength = find.length;
-		int[] next = getNext(find);
-		int originIndex = 0, findIndex = 0;
-		while (originIndex < originLength) {
-			if (findIndex < 0 || origin[originIndex] == find[findIndex]) {
-				if (findIndex == findLength - 1) return originIndex - findIndex;
-				originIndex++;
-				findIndex++;
-			} else {
-				findIndex = next[findIndex];
-			}
-		}
-		return -1;
+	public void helper(List<List<Integer>> res, List<Integer> each, int pos, int[] n) {
+	    if (pos <= n.length) {
+	        res.add(each);
+	        System.out.println("each : " + each);
+	    }
+	    int i = pos;
+	    while (i < n.length) {
+	        each.add(n[i]);
+	        helper(res, new ArrayList<>(each), i + 1, n);
+	        each.remove(each.size() - 1);
+	        i++;
+	        while (i < n.length && n[i] == n[i - 1]) {i++;}
+	    }
+	    return;
 	}
 	
 	public static void main(String[] args) {
-		int[] origin = new int[]{1,2,3,4,5,1,2,3,1,2,3,6};
-		int[] find = new int[]{1,2,3,1,2,3};
-		Test test = new Test();
-		int index = test.KMP(origin, find);
-		System.out.println("result : " + index);
+		int[] nums = {1,1,2,2};
+		List<List<Integer>> result = new Test().subsetsWithDup(nums);
+		System.out.println("result : " + result);
 	}
 }

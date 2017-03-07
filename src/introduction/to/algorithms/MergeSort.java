@@ -1,4 +1,4 @@
-package introduction.to.algorithms.chapter2;
+package introduction.to.algorithms;
 
 import java.util.Arrays;
 
